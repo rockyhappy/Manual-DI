@@ -4,6 +4,7 @@ import com.devrachit.manual_di.dataSource.UserLocalDataSource
 import com.devrachit.manual_di.dataSource.UserRemoteDataSource
 import com.devrachit.manual_di.repository.UserRepository
 import com.devrachit.manual_di.services.LoginService
+import com.devrachit.manual_di.viewmodel.MainViewModelFactory
 import retrofit2.Retrofit
 
 /**Container of objects shared across the whole app*/
@@ -24,5 +25,8 @@ class AppContainer {
 
     /**[UserRepository] is not private
      * it'll be exposed*/
-    val userRepository = UserRepository(localDataSource, remoteDataSource)
+    private val userRepository = UserRepository(localDataSource, remoteDataSource)
+
+    val mainViewModelFactory = MainViewModelFactory(userRepository)
+
 }

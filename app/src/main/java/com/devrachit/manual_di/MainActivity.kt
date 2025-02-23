@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         /**Gets [UserRepository] from the instance of AppContainer in Application*/
         val appContainer = (application as App).appContainer
-        mainViewModel = MainViewModel(appContainer.userRepository)
+        mainViewModel = appContainer.mainViewModelFactory.create()
         setContent {
             ManualDITheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
