@@ -24,30 +24,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        /**
-         * In order to satisfy the dependencies of [MainViewModel], you have to also
-         * satisfy the dependencies of all of its dependencies recursively.
-         * First, create retrofit which is the dependency of UserRemoteDataSource
-         */
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://example.com")
-            .build()
-            .create(LoginService::class.java)
-
-        /**Then, satisfy the dependencies of [UserRepository]**/
-        val remoteDataSource = UserRemoteDataSource(retrofit)
-        val localDataSource = UserLocalDataSource()
-
-        /**
-         * Now you can create an instance of [UserRepository] that [MainViewModel] needs
-         */
-        val userRepository = UserRepository(localDataSource, remoteDataSource)
-
-        /**
-         * Lastly, create an instance of [MainViewModel] with [UserRepository] as
-         */
-
-        mainViewModel = MainViewModel(userRepository)
+        /**Gets [UserRepository] from the instance of AppContainer in Application*/
+        val appContainer = (application as App).appContainer
+        mainViewModel = MainViewModel(appContainer.userRepository)
         setContent {
             ManualDITheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
