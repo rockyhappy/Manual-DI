@@ -11,8 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.devrachit.manual_di.containers.AppContainer
+import com.devrachit.manual_di.containers.UserContainer
 import com.devrachit.manual_di.dataSource.UserLocalDataSource
 import com.devrachit.manual_di.dataSource.UserRemoteDataSource
+import com.devrachit.manual_di.model.UserData
 import com.devrachit.manual_di.repository.UserRepository
 import com.devrachit.manual_di.services.LoginService
 import com.devrachit.manual_di.ui.theme.ManualDITheme
@@ -21,12 +24,18 @@ import retrofit2.Retrofit
 
 class MainActivity : ComponentActivity() {
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var appContainer: AppContainer
+    private lateinit var userData: UserData
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         /**Gets [UserRepository] from the instance of AppContainer in Application*/
         val appContainer = (application as App).appContainer
-        mainViewModel = appContainer.mainViewModelFactory.create()
+        appContainer.userContainer = UserContainer(appContainer.userRepository)
+        mainViewModel = appContainer.userContainer?.mainViewModelFactory?.create() ?: throw IllegalStateException("MainViewModelFactory returned null")
+        userData = appContainer.userContainer?.userData ?: throw IllegalStateException("UserData returned null")
+
         setContent {
             ManualDITheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -37,6 +46,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+    override fun onDestroy() {
+        appContainer.userContainer = null
+        super.onDestroy()
     }
 }
 

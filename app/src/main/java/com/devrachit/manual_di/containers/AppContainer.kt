@@ -25,8 +25,7 @@ class AppContainer {
 
     /**[UserRepository] is not private
      * it'll be exposed*/
-    private val userRepository = UserRepository(localDataSource, remoteDataSource)
-
-    val mainViewModelFactory = MainViewModelFactory(userRepository)
+    val userRepository = UserRepository(localDataSource, remoteDataSource)
+    var userContainer : UserContainer?=null
 
 }
