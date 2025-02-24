@@ -177,7 +177,7 @@ class MainViewModel(private val repository: Repository) {
    - `No-DI`  
    - `With-AppContainer`  
    - `With-Factory-AppContainer`  
-   - `With-Interface`  
+   - `ApplicationFlow`  
 4. Run the app on an emulator or physical device.  
 
 ---
@@ -194,4 +194,4 @@ Contributions are welcome! Feel free to submit **issues** and **pull requests** 
 
 ---
 
-This README **now includes four branches** (`No-DI`, `With-AppContainer`, `With-Factory-AppContainer`, and `With-Interface`). If you have a **different fourth branch**, let me know and I’ll update the documentation accordingly! 😊
+This README **now includes four branches** (`No-DI`, `With-AppContainer`, `With-Factory-AppContainer`, and `ApplicationFlow`). If you have a **different fourth branch**, let me know and I’ll update the documentation accordingly! 😊
